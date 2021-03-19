@@ -7,9 +7,8 @@
   Author URL: http://www.themeforest.net/user/pixinvent
 ========================================================================================== -->
 
-
 <template>
-  <div class="layout--full-page">
+  <div>
     <router-view></router-view>
   </div>
 </template>

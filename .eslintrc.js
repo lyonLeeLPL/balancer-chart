@@ -4,19 +4,16 @@ module.exports = {
     node: true,
     browser: true
   },
-  'extends': [
-    'plugin:vue/essential',
-    'eslint:recommended'
-  ],
+  extends: ['plugin:vue/essential', 'eslint:recommended'],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
     // Best Practices
-    'eqeqeq': 'error',
+    eqeqeq: 'error',
     'no-invalid-this': 'error',
     'no-return-assign': 'error',
-    'no-unused-expressions': ['error', { 'allowTernary': true }],
+    'no-unused-expressions': ['error', { allowTernary: true }],
     'no-useless-concat': 'error',
     'no-useless-return': 'error',
 
@@ -25,9 +22,9 @@ module.exports = {
     'no-use-before-define': 'error',
 
     // Stylistic Issues
-    'array-bracket-newline': ['error', { 'multiline': true, 'minItems': null }],
+    'array-bracket-newline': ['error', { multiline: true, minItems: null }],
     'array-bracket-spacing': 'error',
-    'brace-style': ["error", "1tbs", { "allowSingleLine": true }],
+    'brace-style': ['error', '1tbs', { allowSingleLine: true }],
     'block-spacing': 'error',
     'comma-dangle': 'error',
     'comma-spacing': 'error',
@@ -35,23 +32,23 @@ module.exports = {
     'computed-property-spacing': 'error',
     'func-call-spacing': 'error',
     'implicit-arrow-linebreak': ['error', 'beside'],
-    'indent': ['error', 2],
+    indent: ['off', 0],
     'keyword-spacing': 'error',
     'multiline-ternary': ['error', 'never'],
     'no-lonely-if': 'error',
     'no-mixed-operators': 'error',
-    'no-multiple-empty-lines': ['error', { 'max': 2, 'maxEOF': 1 }],
+    'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],
     'no-tabs': 'error',
     'no-unneeded-ternary': 'error',
-    'no-whitespace-before-property': 'error',
+    'no-whitespace-before-property': 0,
     'nonblock-statement-body-position': 'error',
-    'object-property-newline': ["error", { "allowAllPropertiesOnSameLine": true }],
+    'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
     'quote-props': ['error', 'consistent'],
-    'quotes': ['error', 'single'],
-    'semi': ['error', 'never'],
+    quotes: ['error', 'single'],
+    semi: ['error', 'never'],
     'semi-spacing': 'error',
     'space-before-blocks': 'error',
-    'space-before-function-paren': 'error',
+    'space-before-function-paren': 0,
     'space-in-parens': 'error',
     'space-infix-ops': 'error',
     'space-unary-ops': 'error',
@@ -66,7 +63,7 @@ module.exports = {
     'prefer-template': 'error',
 
     // Vue
-    "vue/html-quotes": ["error", "double"]
+    'vue/html-quotes': ['error', 'double']
   },
   parserOptions: {
     parser: 'babel-eslint',
