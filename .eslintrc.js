@@ -10,7 +10,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
     // Best Practices
-    eqeqeq: 'error',
+    eqeqeq: 'off',
     'no-invalid-this': 'error',
     'no-return-assign': 'error',
     'no-unused-expressions': ['error', { allowTernary: true }],
@@ -20,7 +20,8 @@ module.exports = {
     // Variable
     'init-declarations': 'error',
     'no-use-before-define': 'error',
-
+    'no-unused-vars': 'warn',
+    'vue/no-unused-components': 'warn',
     // Stylistic Issues
     'array-bracket-newline': ['error', { multiline: true, minItems: null }],
     'array-bracket-spacing': 'error',
@@ -34,7 +35,7 @@ module.exports = {
     'implicit-arrow-linebreak': ['error', 'beside'],
     indent: ['off', 0],
     'keyword-spacing': 'error',
-    'multiline-ternary': ['error', 'never'],
+    'multiline-ternary': ['off', 'never'],
     'no-lonely-if': 'error',
     'no-mixed-operators': 'error',
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 1 }],

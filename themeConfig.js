@@ -1,43 +1,37 @@
-/*=========================================================================================
-  File Name: themeConfig.js
-  Description: Theme configuration
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: hhttp://www.themeforest.net/user/pixinvent
-==========================================================================================*/
+// Theme Colors
+// Initially this will be blank. Later on when app is initialized we will assign bootstrap colors to this from CSS variables.
+export const $themeColors = {}
 
-// MAIN COLORS - VUESAX THEME COLORS
-export const colors = {
-  primary: '#7367F0',
-  success: '#28C76F',
-  danger: '#EA5455',
-  warning: '#FF9F43',
-  dark: '#1E1E1E'
+// App Breakpoints
+// Initially this will be blank. Later on when app is initialized we will assign bootstrap breakpoints to this object from CSS variables.
+export const $themeBreakpoints = {}
+
+// APP CONFIG
+export const $themeConfig = {
+  app: {
+    appName: 'Vuexy', // Will update name in navigation menu (Branding)
+    // eslint-disable-next-line global-require
+    appLogoImage: require('@/assets/images/logo/logo.svg') // Will update logo in navigation menu (Branding)
+  },
+  layout: {
+    isRTL: false,
+    skin: 'dark', // light, dark, bordered, semi-dark
+    routerTransition: 'none', // zoom-fade, slide-fade, fade-bottom, fade, zoom-out, none
+    type: 'vertical', // vertical, horizontal
+    contentWidth: 'full', // full, boxed
+    menu: {
+      hidden: false,
+      isCollapsed: false
+    },
+    navbar: {
+      // ? For horizontal menu, navbar type will work for navMenu type
+      type: 'hidden', // static , sticky , floating, hidden
+      backgroundColor: '' // BS color options [primary, success, etc]
+    },
+    footer: {
+      type: 'hidden' // static, sticky, hidden
+    },
+    customizer: false,
+    enableScrollToTop: false
+  }
 }
-
-// CONFIGS
-const themeConfig = {
-  disableCustomizer: true, // options[Boolean] : true, false(default)
-  disableThemeTour: true, // options[Boolean] : true, false(default)
-  footerType: 'hidden', // options[String]  : static(default) / sticky / hidden
-  hideScrollToTop: true, // options[Boolean] : true, false(default)
-  mainLayoutType: 'horizontal', // options[String]  : vertical(default) / horizontal
-  navbarColor: '#fff', // options[String]  : HEX color / rgb / rgba / Valid HTML Color name - (default: #fff)
-  navbarType: 'hidden', // options[String]  : floating(default) / static / sticky / hidden
-  routerTransition: 'none', // options[String]  : zoom-fade / slide-fade / fade-bottom / fade / zoom-out / none(default)
-  rtl: false, // options[Boolean] : true, false(default)
-  sidebarCollapsed: true, // options[Boolean] : true, false(default)
-  theme: 'dark', // options[String]  : "light"(default), "dark", "semi-dark"
-
-  // Not required yet - WIP
-  userInfoLocalStorageKey: 'userInfo'
-
-  // NOTE: themeTour will be disabled in screens < 1200. Please refer docs for more info.
-}
-
-import Vue from 'vue'
-import Vuesax from 'vuesax'
-Vue.use(Vuesax, { theme: { colors }, rtl: themeConfig.rtl })
-
-export default themeConfig
