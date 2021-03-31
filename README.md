@@ -32,7 +32,7 @@ npm run build
 - Switch base & quote asset
 - Chart settings saved to cookies
 - Cached pools list for instant search
-- Responsive design.
+- Chart responsive
 
 ## How to use
 
@@ -48,6 +48,7 @@ npm run build
 
 ## Future development plans
 
+- Fullpage responsive
 - Screenshot
 - Websocket
 

@@ -3,6 +3,7 @@
     <b-nav style="height:38px; z-index: 999;">
       <b-nav-item>
         <v-select
+          :disabled="loading == true"
           class="select-size-sm"
           style="min-width: 400px"
           :resetOnOptionsChange="true"
@@ -23,9 +24,16 @@
       <b-nav-item style="margin-bottom:0.5rem; padding: 0.2rem 0 0 0.5rem; color: #568bff" target="_blank" :href="`https://pools.balancer.exchange/#/pool/${this.selected.id}`">
         Open in Balancer <feather-icon class="text-primary mr-1" icon="LinkIcon" />
       </b-nav-item>
-      <b-form-radio-group id="btn-radios-1" v-model="timeframe" :options="['15m', '1H', '4H', '1D', '1W']" name="radios-btn-default" buttons></b-form-radio-group>
+      <b-form-radio-group
+        :disabled="loading == true"
+        id="btn-radios-1"
+        v-model="timeframe"
+        :options="['15m', '1H', '4H', '1D', '1W']"
+        name="radios-btn-default"
+        buttons
+      ></b-form-radio-group>
       <b-nav-form>
-        <b-form-checkbox style="margin-top: 0.318rem" v-model="baseSwitched" switch>Switch base</b-form-checkbox>
+        <b-form-checkbox :disabled="loading == true" style="margin-top: 0.318rem" v-model="baseSwitched" switch>Switch base</b-form-checkbox>
       </b-nav-form>
     </b-nav>
 
@@ -50,7 +58,7 @@
 </template>
 
 <script>
-  import { BNav, BNavItem, BNavForm, BFormCheckbox, BFormGroup, BFormRadioGroup } from 'bootstrap-vue'
+  import { BNav, BNavItem, BNavForm, BFormCheckbox, BFormRadioGroup } from 'bootstrap-vue'
   import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
   import { TradingVue, DataCube } from 'trading-vue-js'
   import XP from 'tvjs-xp'
@@ -58,14 +66,14 @@
   import Overlays from 'tvjs-overlays'
   import vSelect from 'vue-select'
   export default {
-    components: { TradingVue, BNav, BNavItem, BFormCheckbox, vSelect, BFormGroup, BNavForm, ToastificationContent, BFormRadioGroup },
+    components: { TradingVue, BNav, BNavItem, BFormCheckbox, vSelect, BNavForm, ToastificationContent, BFormRadioGroup },
     data() {
       return {
         ext: Object.values(XP),
         chart: new DataCube({
           chart: {
             type: 'Candles',
-            indexBased: true,
+            indexBased: false,
             data: [],
             settings: {
               showVolume: true
@@ -150,8 +158,7 @@
       },
       async poolChanged(option) {
         if (option && option.id !== this.selected.id) {
-          this.firstTimestamp = undefined
-          await this.loadData(option.id)
+          await this.loadData(true, option.id)
           this.$cookies.set('pool', this.selected, Infinity)
         }
       },
@@ -160,11 +167,17 @@
           await this.loadData()
         }
       },
-      async loadData(poolId = this.selected.id) {
+      async loadData(resetChart = false, poolId = this.selected.id) {
         if (poolId.length < 32) return
         if (this.loading == true) return
         this.loading = true
-
+        if (resetChart) {
+          this.firstTimestamp = undefined
+          this.chart.set('chart.data', [])
+          this.chart.set('offchart.Liquidity.data', [])
+          this.chart.set('chart.tf', this.timeframe)
+          this.$refs.tvjs.resetChart()
+        }
         try {
           const chartData = await this.$http.get(
             `/chart/${poolId}?timeframe=${this.timeframe}${this.baseSwitched ? '&baseSwitch=1' : ''}${this.firstTimestamp ? `&before=${this.firstTimestamp}` : ''}`
@@ -187,12 +200,7 @@
                 }
               )
             }
-            if (!this.firstTimestamp) {
-              this.chart.set('chart.data', [])
-              this.chart.set('offchart.Liquidity.data', [])
-              this.chart.set('chart.tf', this.timeframe)
-              this.$refs.tvjs.resetChart()
-            }
+
             this.firstTimestamp = chartData.data.bars[0][0]
             this.chart.merge('chart.data', chartData.data.bars)
             this.chart.merge('offchart.Liquidity.data', chartData.data.liquidity)
@@ -216,15 +224,12 @@
     },
     watch: {
       async baseSwitched(newValue, oldValue) {
-        this.firstTimestamp = undefined
         this.$cookies.set('baseSwitched', newValue, Infinity)
-        await this.loadData(this.selected.id)
+        await this.loadData(true)
       },
       async timeframe(newValue, oldValue) {
         this.$cookies.set('tf', newValue, Infinity)
-        this.timeframe = newValue
-        this.firstTimestamp = undefined
-        await this.loadData()
+        await this.loadData(true)
       }
     },
     computed: {
@@ -274,5 +279,9 @@
   .custom-control-input:checked ~ .custom-control-label::before {
     border-color: #568bff !important;
     background-color: #568bff !important;
+  }
+
+  .block {
+    cursor: wait;
   }
 </style>

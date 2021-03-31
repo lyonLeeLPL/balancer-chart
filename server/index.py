@@ -1,5 +1,5 @@
 import sys
-from logging import exception
+from logging import error, exception
 import uvicorn
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
@@ -163,13 +163,13 @@ async def getData(pool, timeframe, before=None):
 
     def tfMultiplier(i):
         switcher = {
-            '15T': 64,
-            '1H': 32,
+            '15T': 128,
+            '1H': 64,
             '4H': 16,
-            '1D': 16,
-            '1W': 10
+            '1D': 10,
+            '1W': 5
         }
-        return switcher.get(i, 16)
+        return switcher.get(i, 12)
     swaps = []
     before = int(before/1000 if before else time.time())
     after = before - tfEpoch(timeframe)*tfMultiplier(timeframe)
@@ -222,7 +222,8 @@ async def getData(pool, timeframe, before=None):
 
         except TransportError:
             return 'TheGraph network error. Please try again later!'
-        except:
+        except error:
+            print(error)
             return 'Unknown error. Please try again later!'
         # convert to Dataframe
         # swaps = swaps.reverse()
