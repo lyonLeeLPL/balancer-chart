@@ -6,7 +6,7 @@ import axios from 'axios'
 const axiosIns = axios.create({
   // You can add your headers here
   // ================================
-  baseURL: 'http://108.61.119.59:8000'
+  baseURL: 'https://balancerchart.tk:8000'
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 })
