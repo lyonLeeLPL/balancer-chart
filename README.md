@@ -1,7 +1,7 @@
 # Balancer charts
 
 This project is to show volume and price information of trading pairs on balancer protocol, including total liquidity of the pool.  
-I'm not a front-end dev so it's not so beautiful :(
+
 DEMO: https://onlyc.github.io/balancer-chart/
 ![](https://i.imgur.com/Valg2qG.png)
 
