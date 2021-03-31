@@ -28,7 +28,7 @@
         :disabled="loading == true"
         id="btn-radios-1"
         v-model="timeframe"
-        :options="['15m', '1H', '4H', '1D', '1W']"
+        :options="['15min', '1H', '4H', '1D', '1W']"
         name="radios-btn-default"
         buttons
       ></b-form-radio-group>
@@ -208,7 +208,7 @@
             this.$router.push({ path: '/', query: { pool: this.selected.id } }).catch((err) => {})
             // this.onResize()
             // this.$refs.tvjs.resetChart()
-
+            this.$refs.tvjs.setRange(this.firstTimestamp, this.$refs.tvjs.getRange()[1])
             this.saveIndicators()
             this.rangeChanged(this.$refs.tvjs.getRange())
           }

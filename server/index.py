@@ -127,7 +127,7 @@ async def api_get_pools():
 
 
 @api.get("/chart/{poolid}")
-async def api_get_chart(poolid: str, timeframe: str = Query("1H", regex="^(15T|1H|4H|1D|1W)$", min_length=2, max_length=3), baseSwitch: Optional[int] = Query(0, gt=-1, lt=2), before: Optional[int] = Query(None, gt=time.time()-30000000000, lt=time.time()*1000)):
+async def api_get_chart(poolid: str, timeframe: str = Query("4H", regex="^(15min|1H|4H|1D|1W)$"), baseSwitch: Optional[int] = Query(0, gt=-1, lt=2), before: Optional[int] = Query(None, gt=time.time()-30000000000, lt=time.time()*1000)):
     """ Read the bars. """
     try:
         metadata = pools.loc[pools["id"] == poolid].reset_index(
@@ -153,7 +153,7 @@ async def api_get_chart(poolid: str, timeframe: str = Query("1H", regex="^(15T|1
 async def getData(pool, timeframe, before=None):
     def tfEpoch(i):
         switcher = {
-            '15T': 900,
+            '15min': 900,
             '1H': 3600,
             '4H': 14400,
             '1D': 86400,
@@ -163,7 +163,7 @@ async def getData(pool, timeframe, before=None):
 
     def tfMultiplier(i):
         switcher = {
-            '15T': 128,
+            '15min': 128,
             '1H': 64,
             '4H': 16,
             '1D': 10,
